@@ -1,4 +1,5 @@
 
+
 const formEl = document.querySelector("#task-form");
 const ulEl = document.getElementById("task-list");
 const pageContentEl = document.querySelector("#page-content");
@@ -56,7 +57,7 @@ const createTaskEl  = (taskDataObj) => {
 
     listItemEl.appendChild(taskInfoEl);
 
-    let taskActionsEl = createTaskActions(taskIdCounter);
+    let taskActionsEl = createTaskActions(taskIdCounter, taskDataObj);
     listItemEl.appendChild(taskActionsEl);
     taskDataObj.id = taskIdCounter;
 
@@ -77,7 +78,7 @@ const createTaskEl  = (taskDataObj) => {
     taskIdCounter++
 }
 
-const createTaskActions = (taskId) => {
+const createTaskActions = (taskId, taskDataObj) => {
     let actionContainerEl = document.createElement("div");
     actionContainerEl.className = "task-actions";
     // create edit button
@@ -103,7 +104,15 @@ const createTaskActions = (taskId) => {
         let statusOptionEl = document.createElement("option");
         statusOptionEl.textContent = statusChoices[i];
         statusOptionEl.setAttribute("value", statusChoices[i]);
-      
+        
+    // Check if the current option matches the task's status and set it as the default
+    if (taskDataObj.status === "in progress" && statusChoices[i] === "In Progress") {
+        statusOptionEl.selected = true;
+    } else if (taskDataObj.status === "to do" && statusChoices[i] === "To Do") {
+        statusOptionEl.selected = true;
+    } else if (taskDataObj.status === "completed" && statusChoices[i] === "Completed") {
+        statusOptionEl.selected = true;
+    }
         // append to select
         statusSelectEl.appendChild(statusOptionEl);
       }
