@@ -61,7 +61,7 @@ const createTaskEl  = (taskDataObj) => {
     taskDataObj.id = taskIdCounter;
 
     tasks.push(taskDataObj);
-    console.log(tasks);
+    saveTasks();
     // add entire list item to list
     ulEl.appendChild(listItemEl);
 
@@ -135,6 +135,7 @@ const deleteTask = (taskId) => {
 
     // reassign tasks array to be the same as updatedTaskArr
     tasks = updatedTaskArr;
+    saveTasks()
 }
 
 const editTask = (taskId) => {
@@ -170,6 +171,7 @@ let completeEditTask = function(taskName, taskType, taskId) {
     // reset the form by removing the task id and changing the button text back to normal
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent = "Add Task";
+    saveTasks();
     alert("Task Updated!");
   };
 
@@ -199,8 +201,14 @@ let completeEditTask = function(taskName, taskType, taskId) {
         tasks[i].status = statusValue;
         }
     }
-    console.log(tasks);
+    saveTasks();
   };
+
+  const saveTasks = () => {
+    // JSON stands for JavaScript Object Notation, which is a means of organizing and structuring data that's transferred from one place to another
+    // stringify() implies, we just converted the tasks array into a string for saving in localStorage
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
 
 
     pageContentEl.addEventListener("change", taskStatusChangeHandler);
