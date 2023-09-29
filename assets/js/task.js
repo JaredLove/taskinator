@@ -63,7 +63,16 @@ const createTaskEl  = (taskDataObj) => {
     tasks.push(taskDataObj);
     saveTasks();
     // add entire list item to list
-    ulEl.appendChild(listItemEl);
+    if(taskDataObj.status === "to do"){
+        listItemEl.querySelector("select[name='status-change']").selectedIndex
+        ulEl.appendChild(listItemEl);
+    }else if(taskDataObj.status === "in progress") {
+        listItemEl.querySelector("select[name='status-change']").selectedIndex
+        tasksInProgressEl.appendChild(listItemEl);
+    }else if(taskDataObj.status === "completed"){
+        listItemEl.querySelector("select[name='status-change']").selectedIndex
+        tasksCompletedEl.appendChild(listItemEl);
+    }
 
     taskIdCounter++
 }
